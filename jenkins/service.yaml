@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins-jnlp
+  namespace: jenkins-ns
+spec:
+  type: ClusterIP
+  ports:
+    - port: 50000
+      targetPort: 50000
+  selector:
+    app: jenkins-server
+# ---
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: jenkins-service
+#   labels:
+#     app: jenkins
+#   namespace: jenkins-ns
+# spec:
+#   selector: 
+#     app: jenkins-server
+#   type: NodePort 
+
+#   ports:
+#     - name: httpport
+#       port: 8080
+#       targetPort: 8080
+

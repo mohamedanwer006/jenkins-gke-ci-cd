@@ -19,7 +19,7 @@ spec:
       serviceAccountName: jenkins-admin
       containers:
         - name: jenkins-server
-          image: jenkins/jenkins:lts
+          image: mohameddev006/kubejenkins:1.0 
           resources:
           ports:
             - name: httpport
