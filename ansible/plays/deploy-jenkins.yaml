@@ -1,0 +1,4 @@
+- hosts: bastion
+  gather_facts: no
+  roles:  
+  - role: ./roles/jenkins

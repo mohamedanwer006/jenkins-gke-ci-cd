@@ -1,0 +1,14 @@
+---
+
+- name: copy jenkins dir
+  copy:
+    src: files/jenkins
+    dest: /home/mohamed/
+    directory_mode:
+
+
+- name: Execute the script
+  command: kubectl apply -f /home/mohamed/jenkins/namespace.yaml 
+  
+- name: Execute the script
+  command: kubectl apply -Rf /home/mohamed/jenkins/ 

@@ -1,0 +1,5 @@
+# vars file for jenkins
+---
+app: jenkins
+image: mohameddev006/kubejenkins:1.0
+k8s_kubeconfig : '/home/mohamed/.kube/config'
