@@ -115,7 +115,7 @@ terraform destroy --auto-approve
 
 ### ToDo: for production
 
-- Integrate jenkins with github webhook for automatic ci/cd
+- Integrate jenkins with github webhooks for automatic ci/cd
 - Integrate with slack for notifications
 - Create infrastructure pipeline to provision the infrastructure on GCP (optional)
 - Use helm to deploy the application on GKE cluster (optional)
