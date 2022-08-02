@@ -1,16 +1,21 @@
-# Provision GKE cluster on GCP 
+Provision GKE cluster on GCP 
+====
+
+
 - Deploy jenkins as pod on GKE cluster
+- Use pods as agents to build and deploy application
 - Create a jenkins ci/cd pipeline to deploy a nodejs app on GKE cluster
 
 ![infrastructure](./assets/images/draw.png)
 
-### Provision infrastructure on GCP 🚀
-1. Create a GCP project
-2. ToDo : Create GS bucket and enable versioning to store the terraform state file
-3. Clone repo 
-4. edit project_id in terraform.tfvars with your project id and edit provider configuration 
+Provision infrastructure on GCP 🚀
+----
+
+1. Clone repository 
+2. Edit project_id in terraform.tfvars with your project id and edit provider configuration 
 
 #### Finally  Run the following command to provision the infrastructure 🚀
+
 ```bash
 # initialize terraform
 terraform init
@@ -29,7 +34,7 @@ $ gcloud container clusters get-credentials gke-cluster --zone us-central1-a --p
 
 ### Deploy Jenkins using kubectl 🚀
 
-#### Commands 💻
+##### Commands 💻
 ```bash
 kubectl apply -f ./jenkins/namespace.yaml
 kubectl apply -Rf ./jenkins
@@ -38,7 +43,7 @@ kubectl apply -Rf ./jenkins
 ----
 ### configure jenkins to access the cluster 
 
-#### Copy kube config file to Jenkins pod
+##### Copy kube config file to Jenkins pod
 ```sh
 $ kubectl get po -n jenkins-ns 
 
@@ -57,7 +62,8 @@ DevOps:$  kubectl cp -n jenkins-ns  ~/.kube/config jenkins-server-65b987d59-gm9k
 ```
 
 
-### Open jenkins in browser
+#### Open jenkins in browser
+
 goto MangeJenkins => Manage nodes and cloud => configure clouds => kubernetes
 
 #### describe jnlp service to get the endpoint
@@ -74,11 +80,29 @@ Endpoints:         10.48.0.24:50000
 
 ### Create ci/cd pipeline on jenkins to deploy the application 🚀
 
-Use a declarative pipeline to deploy the application on GKE cluster
+Using a declarative pipeline to deploy the application on GKE cluster
 
 Link to [**pipeline script**](https://github.com/mohamedanwer006/simple-nodejs-app/blob/main/Jenkinsfile)
 
 -----
+
+
+
+### Deploy jenkins using ansible
+
+start by init  ansible galaxy
+
+#### Create role
+```bash
+ansible-galaxy init jenkins
+```
+
+##### Configure bastion with kubeconfig file and run ansible playbook
+
+
+![alt](./assets/images/ansible.png)
+
+
 
 ### Clean up 💣
 
@@ -86,13 +110,27 @@ Link to [**pipeline script**](https://github.com/mohamedanwer006/simple-nodejs-a
 terraform destroy --auto-approve
 ```
 ---
-### ToDo:
-- Deploy jenkins using ansible
-- limit access to service account
 
 
+
+### ToDo: for production
+
+- Integrate jenkins with github webhook for automatic ci/cd
+- Integrate with slack for notifications
+- Create infrastructure pipeline to provision the infrastructure on GCP (optional)
+- Use helm to deploy the application on GKE cluster (optional)
+- Create a dev and prod environment for the application and infrastructure 
+- Backup the jenkins_home directory to a bucket (optional)  
 
 ---
 This [**Article**](https://blog.thecloudside.com/docker-in-docker-with-jenkins-pod-on-kubernetes-f2b9877936f2) 
 and kubernetes plugins [**Documentation**](https://plugins.jenkins.io/kubernetes//)
 I used to configure Docker with jenkins and dynamic agent 
+
+
+----
+
+Application repository: 
+contain the application code and the pipeline script
+
+[**Application repository**](https://github.com/mohamedanwer006/simple-nodejs-app)
